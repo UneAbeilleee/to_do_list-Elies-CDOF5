@@ -1,6 +1,6 @@
 import csv
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, scrolledtext
 
 class ToDoList:
     def __init__(self):
@@ -42,14 +42,8 @@ class ToDoList:
         else:
             print("Invalid task index.")
 
-    def show_tasks(self):
-        if not self.tasks:
-            print('No tasks in the to-do list.')
-        else:
-            print('Tasks in the to-do list:')
-            for idx, task in enumerate(self.tasks, start=1):
-                status = "Completed" if task['completed'] else "Not Completed"
-                print(f'{idx}. {task["task"]} - {status}')
+    def get_tasks(self):
+        return self.tasks
 
 class ToDoListGUI:
     def __init__(self, master):
@@ -81,6 +75,9 @@ class ToDoListGUI:
         self.quit_button = tk.Button(self.master, text="Quit", command=self.master.destroy)
         self.quit_button.pack()
 
+        self.text_display = scrolledtext.ScrolledText(self.master, width=40, height=10)
+        self.text_display.pack()
+
     def add_task(self):
         task = self.task_entry.get()
         if task:
@@ -104,10 +101,17 @@ class ToDoListGUI:
             messagebox.showwarning("Invalid Input", "Please enter a valid task index.")
 
     def show_tasks(self):
-        self.todo_list.show_tasks()
+        tasks = self.todo_list.get_tasks()
+        if not tasks:
+            self.text_display.delete(1.0, tk.END)  # Efface le texte actuel dans le widget Text
+            self.text_display.insert(tk.END, 'No tasks in the to-do list.')
+        else:
+            self.text_display.delete(1.0, tk.END)  # Efface le texte actuel dans le widget Text
+            self.text_display.insert(tk.END, 'Tasks in the to-do list:\n')
+            for idx, task in enumerate(tasks, start=1):
+                status = "Completed" if task['completed'] else "Not Completed"
+                self.text_display.insert(tk.END, f'{idx}. {task["task"]} - {status}\n')
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = ToDoListGUI(root)
-    root.mainloop()
+   
 
