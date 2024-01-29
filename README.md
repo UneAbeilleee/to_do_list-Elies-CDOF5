@@ -39,10 +39,7 @@ It's an app that helps you remember things to do
 
 ## How to contribute
 
-If you wa,t to contribute you can do :
-    - Add colors to distinguish between completed/unfinished tasks
-    - Add due dates
-Or whatever you wish
+If you wa,t to contribute you can do : add colors to distinguish between completed/unfinished tasks, add due dates, or whatever you wish
 
 
 1. **Fork the project**
