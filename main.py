@@ -1,4 +1,6 @@
 import csv
+import tkinter as tk
+from tkinter import messagebox
 
 class ToDoList:
     def __init__(self):
@@ -49,33 +51,63 @@ class ToDoList:
                 status = "Completed" if task['completed'] else "Not Completed"
                 print(f'{idx}. {task["task"]} - {status}')
 
+class ToDoListGUI:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("To-Do List")
+        self.todo_list = ToDoList()
+
+        self.create_widgets()
+
+    def create_widgets(self):
+        self.label = tk.Label(self.master, text="To-Do List")
+        self.label.pack()
+
+        self.task_entry = tk.Entry(self.master, width=30)
+        self.task_entry.pack()
+
+        self.add_button = tk.Button(self.master, text="Add Task", command=self.add_task)
+        self.add_button.pack()
+
+        self.delete_button = tk.Button(self.master, text="Delete Task", command=self.delete_task)
+        self.delete_button.pack()
+
+        self.complete_button = tk.Button(self.master, text="Complete Task", command=self.complete_task)
+        self.complete_button.pack()
+
+        self.show_button = tk.Button(self.master, text="Show Tasks", command=self.show_tasks)
+        self.show_button.pack()
+
+        self.quit_button = tk.Button(self.master, text="Quit", command=self.master.destroy)
+        self.quit_button.pack()
+
+    def add_task(self):
+        task = self.task_entry.get()
+        if task:
+            self.todo_list.add_task(task)
+            self.task_entry.delete(0, tk.END)
+        else:
+            messagebox.showwarning("Empty Task", "Please enter a task.")
+
+    def delete_task(self):
+        try:
+            task_index = int(tk.simpledialog.askstring("Delete Task", "Enter task index to delete:"))
+            self.todo_list.delete_task(task_index)
+        except ValueError:
+            messagebox.showwarning("Invalid Input", "Please enter a valid task index.")
+
+    def complete_task(self):
+        try:
+            task_index = int(tk.simpledialog.askstring("Complete Task", "Enter task index to mark as completed:"))
+            self.todo_list.complete_task(task_index)
+        except ValueError:
+            messagebox.showwarning("Invalid Input", "Please enter a valid task index.")
+
+    def show_tasks(self):
+        self.todo_list.show_tasks()
 
 if __name__ == "__main__":
-    todo_list = ToDoList()
+    root = tk.Tk()
+    app = ToDoListGUI(root)
+    root.mainloop()
 
-    while True:
-        print("\nOptions:")
-        print("1. Add Task")
-        print("2. Delete Task")
-        print("3. Complete Task")
-        print("4. Show Tasks")
-        print("5. Quit")
-
-        choice = input("Enter your choice (1/2/3/4/5): ")
-
-        if choice == "1":
-            task = input("Enter the task: ")
-            todo_list.add_task(task)
-        elif choice == "2":
-            task_index = int(input("Enter the task index to delete: "))
-            todo_list.delete_task(task_index)
-        elif choice == "3":
-            task_index = int(input("Enter the task index to mark as completed: "))
-            todo_list.complete_task(task_index)
-        elif choice == "4":
-            todo_list.show_tasks()
-        elif choice == "5":
-            print("Exiting the to-do list.")
-            break
-        else:
-            print("Invalid choice. Please enter 1, 2, 3, 4, or 5.")
