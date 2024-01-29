@@ -32,14 +32,18 @@ It's an app that helps you remember things to do
 2. **Clone the Repository:**
    ```
    git clone https://github.com/UneAbeilleee/to_do_list-Elies-CDOF5
+   ```
+   ```
    cd to_do_list-Elies-CDOF5
+   ```
+   ```
    python main.py
    ```
 
 
 ## How to contribute
 
-If you wa,t to contribute you can do : add colors to distinguish between completed/unfinished tasks, add due dates, or whatever you wish
+If you want to contribute you can do : add colors to distinguish between completed/unfinished tasks, add due dates, or whatever you wish
 
 
 1. **Fork the project**
