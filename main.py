@@ -113,5 +113,8 @@ class ToDoListGUI:
                 self.text_display.insert(tk.END, f'{idx}. {task["task"]} - {status}\n')
 
 if __name__ == "__main__":
+   root = tk.Tk()
+   app = ToDoListGUI(root)
+   root.mainloop()
    
 
