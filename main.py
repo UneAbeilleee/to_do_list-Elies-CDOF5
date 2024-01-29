@@ -87,11 +87,12 @@ class ToDoListGUI:
             messagebox.showwarning("Empty Task", "Please enter a task.")
 
     def delete_task(self):
-        try:
-            task_index = int(tk.simpledialog.askstring("Delete Task", "Enter task index to delete:"))
-            self.todo_list.delete_task(task_index)
-        except ValueError:
-            messagebox.showwarning("Invalid Input", "Please enter a valid task index.")
+    	try:
+        	task_index = tk.simpledialog.askinteger("Delete Task", "Enter task index to delete:")
+        	if task_index is not None:  # Si l'utilisateur n'a pas annulé la boîte de dialogue
+            	self.todo_list.delete_task(task_index)
+    	except ValueError:
+        	messagebox.showwarning("Invalid Input", "Please enter a valid task index.")
 
     def complete_task(self):
         try:
